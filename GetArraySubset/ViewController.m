@@ -17,13 +17,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    //    NSArray *array = @[@"a"];
+    //    NSArray *array = @[@"a",@"b"];
+    //    NSArray *array = @[@"a",@"b",@"c"];
+    //    NSArray *array = @[@"a",@"b",@"c",@"d"];
+    NSArray *array = @[@"a",@"b",@"c",@"d",@"e"];
+    NSMutableArray *numbers = [NSMutableArray array];
+    for (int i = 0; i < array.count; i++) {
+        [numbers addObject:[NSNumber numberWithInt:0]];
+    }
+    
+    [self subElements:array numbers:numbers index:0];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+/**
+ 求数组所有子集
+ 
+ @param array 原始数组
+ @param numbers 数字数组 - 用于标识使用
+ @param index 索引
+ */
+- (void)subElements:(NSArray *)array numbers:(NSMutableArray *)numbers index:(int)index {
+    if (index == array.count) {
+        NSMutableString *strM = [NSMutableString string];
+        for (int i = 0; i < array.count; i++) {
+            NSNumber *number = numbers[i];
+            if (number.intValue == 1) {
+                [strM appendString:array[i]];
+            }
+        }
+        if (strM.length > 0) {
+            NSLog(@"%@",strM);
+        }
+        return;
+    }
+    numbers[index] = [NSNumber numberWithInt:0];
+    [self subElements:array numbers:numbers index:index + 1];
+    numbers[index] = [NSNumber numberWithInt:1];
+    [self subElements:array numbers:numbers index:index + 1];
 }
-
 
 @end
