@@ -39,6 +39,7 @@
  @param index 索引
  */
 - (void)subElements:(NSArray *)array numbers:(NSMutableArray *)numbers index:(int)index {
+    NSLog(@"index = %d, numbers = %@",index,[self getArrStr:numbers]);
     if (index == array.count) {
         NSMutableString *strM = [NSMutableString string];
         for (int i = 0; i < array.count; i++) {
@@ -47,15 +48,28 @@
                 [strM appendString:array[i]];
             }
         }
-        if (strM.length > 0) {
-            NSLog(@"%@",strM);
-        }
-        return;
+        NSLog(@"%@",strM);
+         return;
     }
     numbers[index] = [NSNumber numberWithInt:0];
     [self subElements:array numbers:numbers index:index + 1];
     numbers[index] = [NSNumber numberWithInt:1];
     [self subElements:array numbers:numbers index:index + 1];
+}
+
+- (NSString *)getArrStr:(NSArray *)array {
+    if (array.count == 0) {
+        return @"";
+    }
+    NSMutableString *strM = [NSMutableString string];
+    for (int i = 0; i < array.count; i++) {
+        if ([array[i] isKindOfClass:[NSString class]]) {
+            [strM appendString:array[i]];
+        } else if ([array[i] isKindOfClass:[NSNumber class]]) {
+            [strM appendString:[NSString stringWithFormat:@"%@",array[i]]];
+        }
+    }
+    return strM;
 }
 
 @end
